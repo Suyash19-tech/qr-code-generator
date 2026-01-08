@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+
+    <!-- Google Font: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="card">
+            <div class="header">
+                <h1 class="title">QR Code Generator</h1>
+                <p class="subtitle">Paste a link below to generate your QR code.</p>
+            </div>
+
+            <div class="input-section">
+                <input 
+                    type="text" 
+                    id="urlInput" 
+                    class="url-input" 
+                    placeholder="https://example.com"
+                    autocomplete="url"
+                >
+
+                <p class="error-message" id="errorMessage"></p>
+
+                <button class="generate-btn" id="generateBtn">
+                    <span class="btn-text">Generate QR</span>
+                    <span class="loader" id="loader"></span>
+                </button>
+            </div>
+
+            <div class="qr-output" id="qrOutput">
+                <div class="qr-box">
+                    
+                    <div class="qr-placeholder" id="qrPlaceholder">
+                        <svg width="200" height="200" viewBox="0 0 200 200" fill="none">
+                            <rect x="20" y="20" width="160" height="160" fill="#e0e7ff" rx="8"/>
+                            <rect x="40" y="40" width="40" height="40" fill="#6366f1" rx="4"/>
+                            <rect x="120" y="40" width="40" height="40" fill="#6366f1" rx="4"/>
+                            <rect x="40" y="120" width="40" height="40" fill="#6366f1" rx="4"/>
+                            <rect x="90" y="90" width="20" height="20" fill="#6366f1" rx="2"/>
+                        </svg>
+                        <p class="placeholder-text">Your QR code will appear here</p>
+                    </div>
+
+                    <img src="" alt="Generated QR Code" class="qr-image" id="qrImage">
+                </div>
+
+                <button class="download-btn" id="downloadBtn">
+                    Download QR Code
+                </button>
+            </div>
+        </div>
+
+        <p class="footer" style="color: black;">Made by Suyash for easy QR generation</p>
+
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+</html>
