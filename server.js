@@ -21,16 +21,20 @@ app.get('/', (req, res) => {
 // =================== GENERATE QR API ===================
 app.post('/api/generate-qr', async (req, res) => {
     try {
-        const { url } = req.body;
+        const { url, size } = req.body;
 
-        if (!url) {
-            return res.status(400).json({
-                success: false,
-                message: 'URL is required'
-            });
-        }
+        const finalSize = Number(size) || 512;
+        const scaleValue = finalSize / 32; // dynamic scaling
+        console.log(finalSize);
+        const qrOptions = {
+            type: 'image/png',
+            width: finalSize,
+            scale: scaleValue,
+            margin: 2,
+            errorCorrectionLevel: "H"
+        };
 
-        const qr = await QRCode.toDataURL(url);
+        const qr = await QRCode.toDataURL(url, qrOptions);
 
         res.json({
             success: true,
@@ -47,6 +51,7 @@ app.post('/api/generate-qr', async (req, res) => {
 });
 
 // =================== START SERVER ===================
-app.listen(3000, () => {
-    console.log("Server running on http://localhost:3000");
-});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log("Server running on port", PORT));
+console.log("QR data length:", qr.length);
+

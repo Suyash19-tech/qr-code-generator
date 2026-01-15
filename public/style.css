@@ -18,7 +18,7 @@ body {
 /* ==================== CONTAINER ==================== */
 .container {
     width: 100%;
-    max-width: 450px;
+    max-width: none;            /* 🔥 removed width restriction */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -31,7 +31,8 @@ body {
     border-radius: 20px;
     padding: 40px 30px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    width: 100%;
+    width: fit-content;        /* 🔥 allow large QR */
+    max-width: none;           /* 🔥 no restriction */
     transition: transform 0.3s ease;
 }
 
@@ -70,7 +71,6 @@ body {
     width: 100%;
     padding: 15px 20px;
     font-size: 15px;
-    font-family: 'Poppins', sans-serif;
     border: 2px solid #e2e8f0;
     border-radius: 12px;
     outline: none;
@@ -100,7 +100,6 @@ body {
     padding: 15px;
     font-size: 16px;
     font-weight: 500;
-    font-family: 'Poppins', sans-serif;
     color: white;
     background: #4fc3f7;
     border: none;
@@ -128,7 +127,6 @@ body {
 }
 
 .btn-text {
-    display: inline-block;
     transition: opacity 0.3s ease;
 }
 
@@ -194,7 +192,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 280px;
+    min-height: auto;
+    width: fit-content;        /* 🔥 allow large QR */
+    height: fit-content;
+    overflow: auto;
 }
 
 /* QR Placeholder */
@@ -218,9 +219,10 @@ body {
 /* QR Image */
 .qr-image {
     display: none;
-    max-width: 250px;
-    width: 100%;
-    height: auto;
+    width: auto !important;      /* 🔥 REAL FIX */
+    height: auto !important;
+    max-width: none !important;  /* 🔥 FULL SIZE ENABLED */
+    max-height: none !important;
     border-radius: 12px;
 }
 
@@ -234,7 +236,6 @@ body {
     padding: 15px;
     font-size: 15px;
     font-weight: 500;
-    font-family: 'Poppins', sans-serif;
     color: #4fc3f7;
     background: white;
     border: 2px solid #4fc3f7;
@@ -250,11 +251,6 @@ body {
     box-shadow: 0 5px 15px rgba(79, 195, 247, 0.3);
 }
 
-.download-btn:active {
-    transform: translateY(0);
-}
-
-/* ==================== FOOTER ==================== */
 .footer {
     font-size: 13px;
     color: rgba(255, 255, 255, 0.8);
@@ -262,37 +258,29 @@ body {
     text-align: center;
 }
 
-/* ==================== RESPONSIVE DESIGN ==================== */
-@media (max-width: 480px) {
-    .card {
-        padding: 30px 20px;
-    }
-    
-    .title {
-        font-size: 24px;
-    }
-    
-    .subtitle {
-        font-size: 13px;
-    }
-    
-    .url-input {
-        padding: 12px 15px;
-        font-size: 14px;
-    }
-    
-    .generate-btn,
-    .download-btn {
-        padding: 12px;
-        font-size: 15px;
-    }
-    
-    .qr-box {
-        padding: 20px;
-        min-height: 240px;
-    }
-    
-    .qr-image {
-        max-width: 200px;
-    }
+/* Settings */
+.setting-group {
+    margin-top: 15px;
+}
+
+.setting-label {
+    font-size: 14px;
+    color: #444;
+    font-weight: 500;
+}
+
+.setting-select {
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #d2d2d2;
+    border-radius: 6px;
+    font-size: 15px;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.setting-select:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 5px rgba(99,102,241,0.3);
 }

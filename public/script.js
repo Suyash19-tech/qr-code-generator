@@ -29,7 +29,8 @@ downloadBtn.addEventListener('click', handleDownload);
 
 async function handleGenerate() {
     const url = urlInput.value.trim();
-
+    const size = document.getElementById("qrSize").value;
+    console.log("Selected size:", size);
     // Clear previous errors
     errorMessage.textContent = "";
 
@@ -45,7 +46,7 @@ async function handleGenerate() {
         const response = await fetch("/api/generate-qr", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ url })
+            body: JSON.stringify({ url, size: Number(size) })
         });
 
         const data = await response.json();
