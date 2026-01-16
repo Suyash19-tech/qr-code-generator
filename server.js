@@ -21,11 +21,41 @@ app.get('/', (req, res) => {
 // =================== GENERATE QR API ===================
 app.post('/api/generate-qr', async (req, res) => {
     try {
-        const { url, size } = req.body;
+        const { url, size, type } = req.body;
+        let qrText = url;
+        switch (type) {
+            case "text":
+                qrText = url;
+                break;
 
+        case "email":
+            qrText = `mailto:${url}`;
+            break;
+
+        case "phone":
+            qrText = `tel:${url}`;
+            break;
+
+        case "sms":
+            const [smsNumber, smsMessage] = url.split("|");
+            qrText = `sms:${smsNumber}?body=${smsMessage}`;
+            break;
+
+        case "whatsapp":
+            qrText = `https://wa.me/?text=${encodeURIComponent(url)}`;
+            break;
+
+        case "wifi":
+            const [ssid, password] = url.split("|");
+            qrText = `WIFI:S:${ssid};T:WPA;P:${password};;`;
+            break;
+
+        default:
+            qrText = url;
+        }
         const finalSize = Number(size) || 512;
         const scaleValue = finalSize / 32; // dynamic scaling
-        console.log(finalSize);
+
         const qrOptions = {
             type: 'image/png',
             width: finalSize,
@@ -34,7 +64,7 @@ app.post('/api/generate-qr', async (req, res) => {
             errorCorrectionLevel: "H"
         };
 
-        const qr = await QRCode.toDataURL(url, qrOptions);
+        const qr = await QRCode.toDataURL(qrText, qrOptions);
 
         res.json({
             success: true,
@@ -53,5 +83,5 @@ app.post('/api/generate-qr', async (req, res) => {
 // =================== START SERVER ===================
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log("Server running on port", PORT));
-console.log("QR data length:", qr.length);
+
 

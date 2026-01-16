@@ -18,12 +18,29 @@
     <div class="container">
 
         <div class="card">
+
             <div class="header">
                 <h1 class="title">QR Code Generator</h1>
                 <p class="subtitle">Paste a link below to generate your QR code.</p>
             </div>
 
             <div class="input-section">
+
+                <!-- QR TYPE -->
+                <div class="setting-group">
+                    <label class="setting-label">QR Type</label>
+                    <select id="qrType" class="setting-select">
+                        <option value="url" selected>URL</option>
+                        <option value="text">Text</option>
+                        <option value="email">Email</option>
+                        <option value="phone">Phone Number</option>
+                        <option value="sms">SMS</option>
+                        <option value="whatsapp">WhatsApp Message</option>
+                        <option value="wifi">WiFi Login</option>
+                    </select>
+                </div>
+
+                <!-- INPUT -->
                 <input 
                     type="text" 
                     id="urlInput" 
@@ -34,19 +51,21 @@
 
                 <p class="error-message" id="errorMessage"></p>
 
+                <!-- BUTTON -->
                 <button class="generate-btn" id="generateBtn">
                     <span class="btn-text">Generate QR</span>
                     <span class="loader" id="loader"></span>
                 </button>
-            </div>
-            <div class="setting-group">
-                <label class="setting-label">QR Size</label>
+
+                <!-- QR SIZE -->
+                <div class="setting-group">
+                    <label class="setting-label">QR Size</label>
                     <select id="qrSize" class="setting-select">
                         <option value="256">256px</option>
                         <option value="512" selected>512px (default)</option>
                         <option value="1024">1024px</option>
                     </select>
-            </div>
+                </div>
             <div class="qr-output" id="qrOutput">
                 <div class="qr-box">
                     
