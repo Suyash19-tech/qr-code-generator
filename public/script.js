@@ -25,28 +25,43 @@ urlInput.addEventListener('input', () => {
 // Download QR
 downloadBtn.addEventListener('click', handleDownload);
 
+document.getElementById("qrType").addEventListener("change", () => {
+    const type = document.getElementById("qrType").value;
+
+    if (type === "url") urlInput.placeholder = "https://example.com";
+    if (type === "text") urlInput.placeholder = "Enter any text";
+    if (type === "email") urlInput.placeholder = "example@email.com";
+    if (type === "phone") urlInput.placeholder = "Enter phone number";
+    if (type === "sms") urlInput.placeholder = "SMS message";
+    if (type === "whatsapp") urlInput.placeholder = "WhatsApp message";
+    if (type === "wifi") urlInput.placeholder = "wifi-name | password";
+});
+
+
 // ==================== MAIN FUNCTIONS ====================
 
 async function handleGenerate() {
+    const qrType = document.getElementById("qrType").value;
     const url = urlInput.value.trim();
     const size = document.getElementById("qrSize").value;
-    console.log("Selected size:", size);
-    // Clear previous errors
+
     errorMessage.textContent = "";
 
-    // Validate url
-    if (!url) return showError("Please enter a URL");
-    if (!isValidURL(url)) return showError("Enter a valid URL (must include http/https)");
+    // Validate only URL type
+    if (qrType === "url" && !isValidURL(url)) {
+        return showError("Enter a valid URL (must include http/https)");
+    }
+
+    if (!url) return showError("Please enter input for QR");
 
     generateBtn.classList.add("loading");
     generateBtn.disabled = true;
 
     try {
-        // Call backend API
         const response = await fetch("/api/generate-qr", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ url, size: Number(size) })
+            body: JSON.stringify({ type: qrType, url, size: Number(size) })
         });
 
         const data = await response.json();
@@ -55,7 +70,6 @@ async function handleGenerate() {
             throw new Error("QR generation failed");
         }
 
-        // Display the QR Code returned from backend
         displayQRCode(data.qrCode);
 
     } catch (err) {
@@ -66,7 +80,6 @@ async function handleGenerate() {
         generateBtn.disabled = false;
     }
 }
-
 // ==================== HELPER FUNCTIONS ====================
 
 function isValidURL(str) {
